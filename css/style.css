@@ -18,3 +18,31 @@ body {
     color: var(--accent-dark)
 }
 
+.container {
+    display: flex;
+    width: 960px;
+    height: 960px;
+    /* align-items: center; */
+    /* flex-flow: row; */
+}
+.column {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+    /* width: 20px; */
+}
+
+.pixel {
+    background-color: var(--accent-light);
+    flex-grow: 1;    
+}
+
+.pixelHover {
+    background-color: var(--accent-dark);
+}
+
+.button {
+    background-color: var(--brand-gray);
+    width: 960px;
+    height: 80px;
+}
