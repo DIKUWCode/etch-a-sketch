@@ -4,10 +4,7 @@
 var body = document.querySelector('body');
 var gridSize = 16;
 var gridDim = 960;
-var pClassName = 'pixel'
-
-
-
+// var newClassName = "initialize"
 
 var container = document.createElement('div');
 container.className = 'container';
@@ -16,6 +13,7 @@ body.appendChild(container);
 var columns = [];
 var pixels = [];
 var pixel
+
 
 function clearElements(elementClass) {
     var toClear = document.getElementsByClassName(elementClass);
@@ -31,19 +29,22 @@ function drawGrid(gridSize) {
         columns[i].className = 'column';
         // columns[i].witdth = pixelDim;
         for (j = 1; j <= gridSize; j++) {
+            //set up the 2-D array 'pixels' populated with div elements with class pixel
             pixels[[i,j]] = document.createElement('div');
             pixels[[i,j]].id = "c" + i + "p" + j;
             pixels[[i,j]].className = 'pixel';
+            //prepare a single div element for listener
             pixel = pixels[[i,j]];
-            // pixels[[i,j]].witdth = pixelDim;
+            //listener for mouseover
             pixel.addEventListener('mouseover', function() {
-            // pixels[[i,j]].addEventListener('mouseover', function(pixel) {
-                // pClassName = 'hover' + this.id;
-                // this.Color = Math.floor(Math.random()*16777215).toString(16);
-                // this.className = pClassName;
-                // newButton.style = "margin-right: 4px"; 
-                // pixels[[i,j]].className = 'pixelHover';
-                this.classList.add('pixelHover');
+                //intialize taste the rainbow on first mouseover
+                if (!this.style.opacity) { // == '0.95') {
+                    this.style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+                    this.style.opacity = 0.1;
+                //up the saturation if subsequent mouseover
+                } else if ( Number(this.style.opacity) < 1) {
+                    this.style.opacity = Number(this.style.opacity) + 0.1;
+                }                
             });
             columns[i].appendChild(pixels[[i,j]]);
         }
@@ -60,15 +61,11 @@ var button = document.createElement('button');
 button.textContent = 'Shake the Etch-a-Sketch';
 button.width = gridDim + 'px'
 button.addEventListener('click', function() {
-    // var dummy = document.getElementsByClassName('pixel');
-    // [...dummy].forEach((pixel) => {
-    //     // console.log(pixel);
-    //     pixel.className = "pixel";        
-    // });
     buttonWork();
 });
 body.insertBefore(button, body.firstChild)
 
+//handle all the non-sense that you might try to enter instead of grid size
 function buttonWork() {
     gridSize = Number(window.prompt("Enter new grid size", gridSize));
     if ( isNaN(gridSize) ) {
@@ -84,4 +81,5 @@ function buttonWork() {
     }
     
 }
+//draw the first grid
 drawGrid(gridSize);
